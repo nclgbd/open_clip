@@ -24,7 +24,7 @@ except ImportError:
     tensorboard = None
 
 try:
-    import horovod.torch as hvd
+    import horovod.torch as hvd # type: ignore
 except ImportError:
     hvd = None
 
@@ -396,6 +396,9 @@ def main(args):
         if args.val_data is not None:
             args.val_sz = data["val"].dataloader.num_samples
         # you will have to configure this for your project!
+        _config = vars(args)
+        _config["name"] = args.name.replace(':', '_')
+        # print(_config)
         wandb.init(
             project=args.wandb_project_name,
             name=args.name,
@@ -403,7 +406,7 @@ def main(args):
             notes=args.wandb_notes,
             tags=[],
             resume='auto' if args.resume == "latest" else None,
-            config=vars(args),
+            config=_config,
         )
         if args.debug:
             wandb.watch(model, log='all')
