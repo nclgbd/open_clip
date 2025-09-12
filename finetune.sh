@@ -1,0 +1,16 @@
+uv run --no-sync python -m open_clip_train.main \
+    --save-frequency 1 \
+    --zeroshot-frequency 1 \
+    --report-to tensorboard \
+    --train-data="train_data.csv"  \
+    --val-data="validate_data.csv"  \
+    --csv-img-key image \
+    --csv-caption-key label \
+    --warmup 10000 \
+    --batch-size=32 \
+    --lr=5e-6 \
+    --wd=0.1 \
+    --epochs=30 \
+    --workers=8 \
+    --csv-separator=, \
+    --model 'hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224'
