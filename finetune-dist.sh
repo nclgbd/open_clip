@@ -1,5 +1,6 @@
-uv run --no-sync python -m open_clip_train.main \
-    --save-frequency 1 \
+export CUDA_VISIBLE_DEVICES=2,3
+uv run --no-sync torchrun --nproc_per_node 2 -m open_clip_train.main \
+    --save-frequency 3 \
     --zeroshot-frequency 1 \
     --report-to tensorboard \
     --train-data="train_data.csv"  \
@@ -8,8 +9,8 @@ uv run --no-sync python -m open_clip_train.main \
     --csv-caption-key label \
     --warmup 1000 \
     --batch-size=32 \
-    --lr=5e-6 \
-    --wd=1.0 \
+    --lr=1e-6 \
+    --wd=2.0 \
     --epochs=30 \
     --workers=16 \
     --csv-separator=, \
